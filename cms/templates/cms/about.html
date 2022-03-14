@@ -1,0 +1,92 @@
+{% extends 'cms/base.html' %}
+
+{% block title %}Home | {% endblock %}
+
+{% block hero %}
+<style>
+    .logo-100 {
+        background-image: url(https://100.todaitotexas.com/bg-small.jpg);
+        color: transparent;
+        -webkit-background-clip: text;
+        font-size: 150px;
+        font-weight: 700;
+    }
+</style>
+
+<section class="hero is-black is-bold">
+    <div class="hero-body">
+        <div class="container is-flex is-justify-content-space-around">
+            <div class="has-text-centered">
+                <div>
+                    <h1 class="logo-100">100</h1> 
+                </div>
+                <div class="mt-3">
+                    <a href="https://100.todaitotexas.com/">
+                        <button class="button is-info is-inverted is-outlined">
+                            <strong>More Info</strong>
+                        </button>
+                    </a>
+                </div>
+            </div>
+            <div class="is-flex is-flex-direction-column is-justify-content-center">
+                <h1 class="title has-text-left">About</h1>
+                <h2 class="subtitle">Product & Member</h2>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block content %}
+<section class="section is-medium">
+
+    <div class="container">
+        <div class="has-text-centered m-6">
+            <h1 class="title">Product</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. The chart which shows the transition in the last 6 months</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="has-text-centered m-6">
+            <h1 class="title">Member</h1>
+        </div>
+    <div class="columns">
+    {% for name,image in lists.items %}
+    <div class="column">
+        <div class="card">
+            <div class="card-image">
+                <figure class="image is-1by1">
+                    <img src="{{image}}" alt="Placeholder image">
+                </figure>
+            </div>
+            <div class="card-content">
+            <div class="media">
+                <div class="media-left">
+                <figure class="image is-1by1">
+                    <img src={{image}} alt="Placeholder image">
+                </figure>
+                </div>
+                <div class="media-content">
+                <p class="title is-4">{{name}}</p>
+                <p class="subtitle is-6">@johnsmith</p>
+                </div>
+            </div>
+        
+            <div class="content">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                Phasellus nec iaculis mauris. <a>@bulmaio</a>.
+                <a href="#">#css</a> <a href="#">#responsive</a>
+                <br>
+                <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
+            </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    </div>
+    </div>
+</section>
+
+{% endblock %}
+
