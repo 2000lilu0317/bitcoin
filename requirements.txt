@@ -4,3 +4,4 @@ tensorflow
 pandas
 numpy
 matplotlib 
+apscheduler

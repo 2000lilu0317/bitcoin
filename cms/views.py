@@ -2,8 +2,6 @@ from django.views.generic.base import TemplateView
 import numpy as np
 import pandas as pd
 
-from cms.module.get_data import get_all_data
-from cms.module.train import train
 from cms.module.predict import predict
 
 from cms.chart_module.chart import create_graph, get_image
@@ -13,7 +11,6 @@ class BitcoinView(TemplateView):
 
     def get_context_data(self,**kwargs):
 
-        # train("btn") どこかのタイミングで学習させなくてはいけないが、読み込み時に毎回やると重くなる。
         prediction = predict("btn")
 
         df = pd.read_csv("cms/module/btnjpy_hour.csv")
@@ -33,7 +30,6 @@ class EthereumView(TemplateView):
 
     def get_context_data(self,**kwargs):
 
-        # train("eth") どこかのタイミングで学習させなくてはいけないが、読み込み時に毎回やると重くなる。
         prediction = predict("eth")
 
         df = pd.read_csv("cms/module/ethjpy_hour.csv")
@@ -52,8 +48,6 @@ class AboutView(TemplateView):
     template_name = 'cms/about.html'
 
     def get_context_data(self,**kwargs):
-
-        get_all_data() # 若干重いが、とりあえず今はここでデータを取ってくる
 
         context = super().get_context_data(**kwargs)
         context["lists"] = {

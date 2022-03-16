@@ -15,7 +15,7 @@ def train(name):
     #print(model.summary())
 
     #modelをコンパイル（最小化しようとする損失関数--ここでは自乗誤差--などを指定）する
-    model.compile(loss='mse', optimizer=Adam(lr=0.001), metrics=['mae'])
+    model.compile(loss='mse', optimizer=Adam(learning_rate=0.001), metrics=['mae'])
 
     #学習用データ
     path = "cms/module/{}jpy_hour.csv"
@@ -32,25 +32,16 @@ def train(name):
 
     df = df.dropna(how="any")
 
-    print(df.head())
-    print(df.tail())
-    print(df.columns)
-
     #dfをnumpy配列に変換
     #訓練データ(train_x)は　過去16時点までの価格*行数　となっている
     train_x=df[["ClosePrice-"+str(i+1) for i in range(16)]].values
     train_y=df["ClosePrice"].values
 
-    print(train_x.shape)
-    print(train_y.shape)
-    print(train_x)
-    print(train_y)
-
     #注意）今回はコードの簡単さを重視して正規化などは無し
     #リターンの時系列などにする、といった工夫もなし
 
     # 学習の実行
-    history = model.fit(train_x, train_y, epochs=30, validation_split=0.2)
+    history = model.fit(train_x, train_y, epochs=400, validation_split=0.2)
 
     #学習結果をファイルに保存
     #成功するとディレクトリ内にparam.hdf5というファイルが生成される
