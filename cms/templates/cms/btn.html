@@ -23,6 +23,7 @@
             <div class="is-flex is-flex-direction-column is-justify-content-center">
                 <h2 class="subtitle">Prediction</h2>
                 <h1 class="title has-text-left">{{pred}}</h1>
+                <h2 class="subtitle">Pre Diff: {{diff}}</h2>
             </div>
         </div>
     </div>
@@ -35,9 +36,20 @@
         <div class="has-text-centered">
             <h1 class="title">Chart</h1>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. The chart which shows the transition in the last 6 months</p>
-            <img src="data:image/png;base64, {{ graph | safe }} " alt="">
+            {% for graph in graph_list %}
+                <img src="data:image/png;base64, {{ graph | safe }} " class="chart">  
+            {% endfor %}     
         </div>
+
+        <div class="buttons is-centered mt-6">
+            <button class="button is-info" onclick="show_only(0)">1日</button>
+            <button class="button is-success" onclick="show_only(1)">5日</button>
+            <button class="button is-warning" onclick="show_only(2)">1ヶ月</button>
+            <button class="button is-danger" onclick="show_only(3)">6ヶ月</button>
+        </div>
+
     </div>
+
 </section>
 
 {% endblock %}

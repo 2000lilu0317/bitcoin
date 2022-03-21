@@ -6,12 +6,9 @@ from cms.module.get_data import get_all_data
 from cms.module.train import train
 
 def update():
-   """
-   This function is called by start() below
-   """
+   get_all_data() 
    train("btn")
    train("eth")
-   get_all_data() # 若干重いが、とりあえず今はここでデータを取ってくる
    print('Update!')
 
 def start():
@@ -21,5 +18,5 @@ def start():
    """
    scheduler = BackgroundScheduler()
    
-   scheduler.add_job(update, 'interval', seconds=1800) # schedule
+   scheduler.add_job(update, 'interval', seconds=3600) # schedule
    scheduler.start()

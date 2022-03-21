@@ -67,7 +67,19 @@
                 menu.classList.toggle('is-active');
             });
         }
-        {% block extrajs %}{% endblock %}
+        
+        window.onload = function () {
+            console.log("start")
+            show_only(0)
+        }
+
+        function show_only(id) {
+            charts = document.getElementsByClassName("chart")
+            for(let i=0;i<charts.length;i++){
+                if(i==id) charts[i].style.display ="inline";
+                else charts[i].style.display ="none";
+            }
+        }
     </script>
 </body>
 </html>

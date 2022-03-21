@@ -1,10 +1,13 @@
 from django.views.generic.base import TemplateView
 import numpy as np
 import pandas as pd
+import datetime
 
 from cms.module.predict import predict
 
-from cms.chart_module.chart import create_graph, get_image
+from cms.chart_module.chart import get_image_list
+
+pre_predict = [0,0]
 
 class BitcoinView(TemplateView):
     template_name = 'cms/btn.html'
@@ -12,17 +15,20 @@ class BitcoinView(TemplateView):
     def get_context_data(self,**kwargs):
 
         prediction = predict("btn")
+        diff = pre_predict[0]-prediction
+        pre_predict[0] = prediction
 
         df = pd.read_csv("cms/module/btnjpy_hour.csv")
         show_list = df["ClosePrice"]
         x_list = show_list
-        t_list = range(len(show_list))
-        create_graph(x_list, t_list)
-        graph = get_image()
+        t_list = df["CloseTime"]
+        new_list = [datetime.datetime.fromtimestamp(d) for d in t_list]
+        graph_list = get_image_list(x_list, new_list)
 
         context = super().get_context_data(**kwargs)
         context["pred"] = prediction
-        context["graph"] = graph
+        context["diff"] = diff
+        context["graph_list"] = graph_list
         return context
     
 class EthereumView(TemplateView):
@@ -31,17 +37,20 @@ class EthereumView(TemplateView):
     def get_context_data(self,**kwargs):
 
         prediction = predict("eth")
+        diff = pre_predict[1]-prediction
+        pre_predict[1] = prediction
 
         df = pd.read_csv("cms/module/ethjpy_hour.csv")
         show_list = df["ClosePrice"]
         x_list = show_list
-        t_list = range(len(show_list))
-        create_graph(x_list, t_list)
-        graph = get_image()
+        t_list = df["CloseTime"]
+        new_list = [datetime.datetime.fromtimestamp(d) for d in t_list]
+        graph_list = get_image_list(x_list, new_list)
 
         context = super().get_context_data(**kwargs)
         context["pred"] = prediction
-        context["graph"] = graph
+        context["diff"] = diff
+        context["graph_list"] = graph_list
         return context
 
 class AboutView(TemplateView):
