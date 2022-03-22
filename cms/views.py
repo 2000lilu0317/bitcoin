@@ -22,8 +22,9 @@ class BitcoinView(TemplateView):
         show_list = df["ClosePrice"]
         x_list = show_list
         t_list = df["CloseTime"]
+        x_predict = pd.read_csv("cms/module/btn_predict.csv")["price"]
         new_list = [datetime.datetime.fromtimestamp(d) for d in t_list]
-        graph_list = get_image_list(x_list, new_list)
+        graph_list = get_image_list(x_list, x_predict, new_list)
 
         context = super().get_context_data(**kwargs)
         context["pred"] = prediction
@@ -44,8 +45,9 @@ class EthereumView(TemplateView):
         show_list = df["ClosePrice"]
         x_list = show_list
         t_list = df["CloseTime"]
+        x_predict = pd.read_csv("cms/module/eth_predict.csv")["price"]
         new_list = [datetime.datetime.fromtimestamp(d) for d in t_list]
-        graph_list = get_image_list(x_list, new_list)
+        graph_list = get_image_list(x_list, x_predict, new_list)
 
         context = super().get_context_data(**kwargs)
         context["pred"] = prediction
