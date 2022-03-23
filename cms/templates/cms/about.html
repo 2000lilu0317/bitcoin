@@ -43,7 +43,7 @@
     <div class="container">
         <div class="has-text-centered m-6">
             <h1 class="title">Product</h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. The chart which shows the transition in the last 6 months</p>
+            <p> 仮想通貨の価格を深層学習やランダムフォレストなどを用いて予測するwebアプリです</p>
         </div>
     </div>
 
@@ -69,17 +69,24 @@
                 </div>
                 <div class="media-content">
                 <p class="title is-4">{{name}}</p>
-                <p class="subtitle is-6">@johnsmith</p>
+                <!--<p class="subtitle is-6">@johnsmith</p>-->
                 </div>
             </div>
-        
+            {% if name == "Li Lu"%}
             <div class="content">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Phasellus nec iaculis mauris. <a>@bulmaio</a>.
-                <a href="#">#css</a> <a href="#">#responsive</a>
-                <br>
-                <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
+                東京大学教養学部学際科学科4年
             </div>
+                {% endif %}
+                {% if name == "Kouno Kazuma"%}
+            <div class="content">
+                東京大学理科二類1年
+            </div>
+                {% endif %}
+                {% if name == "KIMURA Nanako"%}
+            <div class="content">
+                東京大学理科二類2年
+            </div>
+                {% endif %}
             </div>
         </div>
     </div>
