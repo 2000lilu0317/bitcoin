@@ -4,10 +4,9 @@ import pandas as pd
 import datetime
 
 from cms.module.predict import predict
+from cms.module.predict import predict2
 
 from cms.chart_module.chart import get_image_list
-
-pre_predict = [0,0]
 
 class BitcoinView(TemplateView):
     template_name = 'cms/btn.html'
@@ -15,20 +14,19 @@ class BitcoinView(TemplateView):
     def get_context_data(self,**kwargs):
 
         prediction = predict("btn")
-        diff = pre_predict[0]-prediction
-        pre_predict[0] = prediction
-
         df = pd.read_csv("cms/module/btnjpy_hour.csv")
         show_list = df["ClosePrice"]
         x_list = show_list
         t_list = df["CloseTime"]
         x_predict = pd.read_csv("cms/module/btn_predict.csv")["price"]
+        new_prediction = predict2("btn", "eth")
+
         new_list = [datetime.datetime.fromtimestamp(d) for d in t_list]
         graph_list = get_image_list(x_list, x_predict, new_list)
 
         context = super().get_context_data(**kwargs)
-        context["pred"] = prediction
-        context["diff"] = diff
+        context["pred_hour"] = prediction
+        context["pred_day"] = new_prediction
         context["graph_list"] = graph_list
         return context
     
@@ -38,20 +36,19 @@ class EthereumView(TemplateView):
     def get_context_data(self,**kwargs):
 
         prediction = predict("eth")
-        diff = pre_predict[1]-prediction
-        pre_predict[1] = prediction
-
         df = pd.read_csv("cms/module/ethjpy_hour.csv")
         show_list = df["ClosePrice"]
         x_list = show_list
         t_list = df["CloseTime"]
         x_predict = pd.read_csv("cms/module/eth_predict.csv")["price"]
+        new_prediction = predict2("eth","btn")
+
         new_list = [datetime.datetime.fromtimestamp(d) for d in t_list]
         graph_list = get_image_list(x_list, x_predict, new_list)
 
         context = super().get_context_data(**kwargs)
-        context["pred"] = prediction
-        context["diff"] = diff
+        context["pred_hour"] = prediction
+        context["pred_day"] = new_prediction
         context["graph_list"] = graph_list
         return context
 
