@@ -36,21 +36,22 @@ def predict2(name,other):
     df = pd.read_csv(path.format(name))
     df2 = pd.read_csv(path.format(other))
     for i in range(21):
-        df["ClosePrice-"+str(i+1)]=df["ClosePrice"].shift(i+1)
-    # for i in range(16):
-    #     df["前日比%-"+str(i+1)]=df["前日比%"].shift(i+1)
+        df["HighPrice-"+str(i+1)]=df["HighPrice"].shift(i+1)
+    df["Rate"] = 100*(df["HighPrice"]-df["HighPrice-1"])/df["HighPrice-1"]
     for i in range(16):
-        df2["ClosePrice-"+str(i+1)]=df2["ClosePrice"].shift(i+1)
+        df["Rate-"+str(i+1)]=df["Rate"].shift(i+1)
+    for i in range(16):
+        df2["HighPrice-"+str(i+1)]=df2["HighPrice"].shift(i+1)
 
-    X = pd.concat([df[["ClosePrice-"+str(i+1) for i in range(21)]],df2[["ClosePrice-"+str(i+1) for i in range(16)]]],axis=1)
+    X = pd.concat([df[["HighPrice-"+str(i+1) for i in range(21)] + ["Rate-"+str(i+1) for i in range(16)]],df2[["HighPrice-"+str(i+1) for i in range(16)]]],axis=1)
     X = X.dropna(how="any").values
-    y = df.dropna(how="any")['ClosePrice'].values
+    y = df.dropna(how="any")['HighPrice'].values
 
 
     model = lgb.LGBMRegressor() # モデルのインスタンスの作成
     model.fit(X, y) # モデルの学習
 
-    input_data = np.concatenate([[df["ClosePrice"].iloc[-(i+1)] for i in range(21)],[df2["ClosePrice"].iloc[-(i+1)] for i in range(16)]]).reshape(1, -1)
+    input_data = np.concatenate([[df["HighPrice"].iloc[-(i+1)] for i in range(21)],[df["Rate"].iloc[-(i+1)] for i in range(16)],[df2["HighPrice"].iloc[-(i+1)] for i in range(16)]]).reshape(1, -1)
 
     #推論値
     prediction = model.predict(input_data)[0]
