@@ -27,6 +27,7 @@ class BitcoinView(TemplateView):
         context = super().get_context_data(**kwargs)
         context["pred_hour"] = prediction
         context["pred_day"] = new_prediction
+        context["now_price"] = df.iloc[-1]["ClosePrice"]
         context["graph_list"] = graph_list
         return context
     
@@ -49,6 +50,7 @@ class EthereumView(TemplateView):
         context = super().get_context_data(**kwargs)
         context["pred_hour"] = prediction
         context["pred_day"] = new_prediction
+        context["now_price"] = df.iloc[-1]["ClosePrice"]
         context["graph_list"] = graph_list
         return context
 
